@@ -76,3 +76,5 @@ gem "devise", "~> 4.9"
 gem "devise-two-factor", "~> 5.0"
 
 gem "letter_opener", group: :development
+
+gem "recaptcha", "~> 5.12"

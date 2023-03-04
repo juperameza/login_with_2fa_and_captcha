@@ -1,12 +1,15 @@
 class SessionsController < Devise::SessionsController
     before_action :authenticate_2fa!, only: :create
+    before_action :check_captcha, only: [:create] # Change this to be any actions you want to protect.
+
+
 
     def authenticate_2fa!
         user = self.resource = find_user
         return unless user
         if user_params[:otp_attempt].present?
             auth_with_2fa(user)
-        elsif user.valid_password?(user_params[:password]) && user.otp_required_for_login
+        elsif user.valid_password?(user_params[:password]) && user.otp_required_for_login 
             session[:user_id] = user.id
             CodeMailer.send_code(user).deliver_now
             return render "users_otp/two_fa"
@@ -32,6 +35,18 @@ class SessionsController < Devise::SessionsController
     private
     def user_params
         params.fetch(:user, {}).permit(:otp_attempt, :password, :email, :remember_me)
+    end
+
+    def check_captcha
+       if verify_recaptcha # verify_recaptcha(action: 'login') for v3
+        return authenticate_2fa!
+       end
+      self.resource = resource_class.new sign_in_params
+
+      respond_with_navigational(resource) do
+        flash.discard(:recaptcha_error) # We need to discard flash to avoid showing it on the next page reload
+        render :new
+      end
     end
     end
 
