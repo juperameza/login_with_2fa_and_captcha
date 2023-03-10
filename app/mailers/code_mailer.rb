@@ -8,6 +8,6 @@ class CodeMailer < ApplicationMailer
   def send_code(user)
     @code = user.current_otp
 
-    mail to: "to@example.org"
+    mail to: user.email, subject: "Your code"
   end
 end
