@@ -1,6 +1,10 @@
-<%= form_with(model: equipment) do |form| %>
+<div class="container">
+
+
+
+<%= form_with(model: equipment, class: "form") do |form| %>
   <% if equipment.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger">
       <h2><%= pluralize(equipment.errors.count, "error") %> prohibited this equipment from being saved:</h2>
 
       <ul>
@@ -11,27 +15,23 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :free_weigth, style: "display: block" %>
-    <%= form.text_field :free_weigth %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :boolean,, style: "display: block" %>
-    <%= form.text_field :boolean, %>
+  <div class="mb-3">
+    <%= form.label :free_weigth, class: "form-label" %>
+    <%= form.select :free_weigth, [["Peso libre", true], ["Maquina", false]], {}, class: "form-select" %>
   </div>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="mb-3">
+    <%= form.label :status, class: "form-label" %>
+    <%= form.select :status, [["Funcionando", 0], ["Fuera de servicio", 1], ["En reparacion", 2]], {}, class: "form-select" %>
   </div>
 
-  <div>
-    <%= form.label :string, style: "display: block" %>
-    <%= form.text_field :string %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= form.submit "Save", class: "btn btn-primary" %>
   </div>
 <% end %>
+

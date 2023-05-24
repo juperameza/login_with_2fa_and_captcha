@@ -10,11 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_03_051800) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_24_025550) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "posts", force: :cascade do |t|
+  create_table "clients", force: :cascade do |t|
+    t.string "name"
+    t.date "birthdate"
+    t.boolean "membership"
+    t.string "emergency_cname"
+    t.string "emergency_cphone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "equipment", force: :cascade do |t|
+    t.boolean "free_weigth"
+    t.string "name"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -30,8 +43,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_051800) do
     t.string "otp_secret"
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login"
+    t.string "name"
+    t.boolean "admin", default: false
+    t.date "birthday"
+    t.string "phone_number"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end
+image.png

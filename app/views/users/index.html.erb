@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-12">
+      <h1>Empleados</h1>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-6">
+      <%= link_to "Agregar empleado", "users/sign_up", class: "btn btn-success" %>
+    </div>
+    <div class="col-6 text-end">
+      <input type="text" class="form-control" placeholder="Buscar" id="searchInput">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Peso libre</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+               <td><%= user.birthday %></td>
+              <td>
+              <% if current_user.email == user.email%>
+                 <%= link_to "Editar propio", edit_user_registration_path, method: :get,class: "btn btn-secondary" %>
+             <%else%>
+                 <%= link_to "Editar", edit_user_path(user), class: "btn btn-secondary" %>
+              <%end%>
+                <%= link_to "Borrar", user_registration_path(user),  data: { turbo_method: :delete, turbo_confirm: "¿Si tilin?" }, class: "btn btn-danger" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

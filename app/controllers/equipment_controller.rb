@@ -1,4 +1,5 @@
 class EquipmentController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_equipment, only: %i[ show edit update destroy ]
 
   # GET /equipment or /equipment.json
@@ -25,7 +26,7 @@ class EquipmentController < ApplicationController
 
     respond_to do |format|
       if @equipment.save
-        format.html { redirect_to equipment_url(@equipment), notice: "Equipment was successfully created." }
+        format.html { redirect_to  equipment_index_path, notice: "Equipment was successfully created." }
         format.json { render :show, status: :created, location: @equipment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +39,7 @@ class EquipmentController < ApplicationController
   def update
     respond_to do |format|
       if @equipment.update(equipment_params)
-        format.html { redirect_to equipment_url(@equipment), notice: "Equipment was successfully updated." }
+        format.html { redirect_to equipment_index_path, notice: "Equipment was successfully updated." }
         format.json { render :show, status: :ok, location: @equipment }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -65,6 +66,6 @@ class EquipmentController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def equipment_params
-      params.require(:equipment).permit(:free_weigth, :boolean,, :name, :string)
+      params.require(:equipment).permit(:free_weigth, :name, :status)
     end
 end

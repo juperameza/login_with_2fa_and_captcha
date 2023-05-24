@@ -1,14 +1,43 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Equipment</h1>
-
-<div id="equipment">
-  <% @equipment.each do |equipment| %>
-    <%= render equipment %>
-    <p>
-      <%= link_to "Show this equipment", equipment %>
-    </p>
-  <% end %>
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-12">
+      <h1>Aparatos</h1>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-6">
+      <%= link_to "Agregar aparato", new_equipment_path, class: "btn btn-success" %>
+    </div>
+    <div class="col-6 text-end">
+      <input type="text" class="form-control" placeholder="Buscar" id="searchInput">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Peso libre</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @equipment.each do |equipment| %>
+            <tr>
+              <td><%= equipment.name %></td>
+              <td><%= equipment.free_weigth ? "Peso libre" : "Aparato" %></td>
+              <td><%= equipment.status%></td>
+              <td>
+                <%= link_to "Editar", edit_equipment_path(equipment), class: "btn btn-secondary" %>
+                <%= link_to "Borrar", equipment_path(equipment),  data: { turbo_method: :delete, turbo_confirm: "¿Si tilin?" }, class: "btn btn-danger" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
-<%= link_to "New equipment", new_equipment_path %>
