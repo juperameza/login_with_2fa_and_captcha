@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :equipment
   patch 'users_otp/enable'
   get 'users_otp/disable'
   devise_for :users, controllers: {

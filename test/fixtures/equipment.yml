@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  free_weigth: MyString
+  boolean,: MyString
+  name: MyString
+  string: MyString
+
+two:
+  free_weigth: MyString
+  boolean,: MyString
+  name: MyString
+  string: MyString
