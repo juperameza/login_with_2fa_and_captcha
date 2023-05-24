@@ -80,3 +80,5 @@ gem "letter_opener", group: :development
 gem "recaptcha", "~> 5.12"
 
 gem "rails-i18n", "~> 7.0"
+
+gem "devise_zxcvbn", "~> 6.0"
