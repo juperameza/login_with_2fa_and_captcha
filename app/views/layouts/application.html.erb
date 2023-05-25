@@ -21,7 +21,9 @@
      <% if alert %>
              <p class="alert alert-danger"><%= alert %></p>
      <% end %>
+     <%if user_signed_in?%>
     <%= render 'layouts/navbar'  %>
+    <%end%>
     <%= yield %>
   </body>
 </html>

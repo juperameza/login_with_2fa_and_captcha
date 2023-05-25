@@ -22,7 +22,10 @@ class EquipmentController < ApplicationController
 
   # POST /equipment or /equipment.json
   def create
-    @equipment = Equipment.new(equipment_params)
+    params = equipment_params
+    params[:status]= params[:status].to_i
+    puts(params)
+    @equipment = Equipment.new(params)
 
     respond_to do |format|
       if @equipment.save
