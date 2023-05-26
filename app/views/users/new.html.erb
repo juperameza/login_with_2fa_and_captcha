@@ -1,7 +1,7 @@
 <div class="container">
   <h2>Crear </h2>
 
-  <%= form_for (@user) do |f| %>
+  <%= form_for(@user, data: {turbo: false, controller: "user"}) do |f| %>
 
 
     <div class="mb-3">
@@ -18,6 +18,11 @@
     <%= f.date_field :birthday%>
   </div>
 
+<div class="form-floating mb-3">
+            <%= f.text_field :phone_number, autofocus: true, autocomplete: "phone_number" , class: "form-control", id:"floatingPhone", placeholder: "Numero de telefono"%>
+            <%= f.label :phone_number, for: "floatingPhone" %>
+          </div>
+          <div>
     <div class="mb-3">
       <%= f.label "Contraseña", class: "form-label" %>
       <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
@@ -39,7 +44,7 @@
 
 
     <div class="mb-3">
-      <%= f.submit "Crear", class: "btn btn-primary" %>
+      <%= f.submit "Crear", class: "btn btn-primary", id: "crear" %>
     </div>
   <% end %>
 

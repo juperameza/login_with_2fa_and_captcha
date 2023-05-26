@@ -1,32 +1,110 @@
-<h2 >Log in</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #FFE6E6, #AED6F1);
+      background-size: cover;
+    }
+    
+    .blur-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(4px);
+    }
+    
+    .logo-img {
+      width: 200px;
+      height: 200px;
+      margin-bottom: 20px;
+    }
+    
+    .container {
+      max-width: 600px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-group label {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    
+    .form-control {
+      font-size: 18px;
+      height: 50px;
+    }
+    
+    .btn-primary {
+      font-size: 20px;
+      height: 50px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false, controller: "hello" }) do |f| %>
-  <div class="form-floating mb-3">
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" , class: "form-control", id:"floatingEmail",  placeholder: "Hole"%>
-    <%= f.label :email, for: "floatingEmail" %>
-  </div>
+  <div class="blur-background"></div>
+  <div class="container">
+    <div class="card">
+      <div class="card-body text-center">
+        <%=image_tag "logo.png", alt:"Logo", class:"logo-img"%>
+        <h2 class="card-title mb-4">Log in</h2>
+        <% if notice %>
+        <p class="alert alert-success"><%= notice %></p>
+     <% end %>
 
-  <div class="form-floating mb-3">
-    <%= f.password_field :password, autocomplete: "current-password", class: "form-control", id:"floatingInput", placeholder: "password" %>
-    <%= f.label :password,  for: "floatingInput"%>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="mb-3 form-check">
-      <%= f.check_box :remember_me, class: "form-check-input" %>
-      <%= f.label :remember_me , class: "form-check-label"%>
-    </div>
-  <% end %>
-  <div class="mb-3">
-  <%if flash[:recaptcha_error]%>
-     <div class="alert alert-danger"><%= flash[:recaptcha_error] %> </div>
-    <%end%>
-    <%= recaptcha_tags %>
-  </div>
-  <div class="actions mb-3">
-    <%= f.submit "Log in", id: "login", class:"btn btn-primary" %>
-  </div>
-
+     <% if alert %>
+             <p class="alert alert-danger"><%= alert %></p>
+     <% end %>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false, controller: "hello" }) do |f| %>
+          <div class="form-group">
+            <%= f.label :email %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "" %>
+          </div>
+          
+          <div class="form-group">
+            <%= f.label :password %>
+            <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "" %>
+          </div>
+          
+          <% if devise_mapping.rememberable? %>
+            <div class="form-group form-check">
+              <%= f.check_box :remember_me, class: "form-check-input" %>
+              <%= f.label :remember_me, class: "form-check-label" %>
+            </div>
+          <% end %>
+          
+          <div class="form-group">
+            <% if flash[:recaptcha_error] %>
+              <div class="alert alert-danger"><%= flash[:recaptcha_error] %></div>
+            <% end %>
+            <%= recaptcha_tags %>
+          </div>
+          
+          <div class="form-group">
+            <%= f.submit "Log in", id: "login", class: "btn btn-primary btn-block" %>
+          </div>
+        <% end %>
+        
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+  <%= link_to "Forgot your password?", new_password_path(resource_name), class:"link-warning" %><br />
 <% end %>
+      </div>
+    </div>
+  </div>
 
-<%= render "devise/shared/links" %>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

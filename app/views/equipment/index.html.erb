@@ -5,11 +5,20 @@
     </div>
   </div>
   <div class="row mb-3">
-    <div class="col-6">
-      <%= link_to "Agregar aparato", new_equipment_path, class: "btn btn-success" %>
-    </div>
-    <div class="col-6 text-end">
-      <input type="text" class="form-control" placeholder="Buscar" id="searchInput">
+    <%if current_user.admin?%>
+      <div class="col-6">
+        <%= link_to "Agregar aparato", new_equipment_path, class: "btn btn-success" %>
+      </div>
+    <%end%>
+    <div class="col-md-6 d-flex justify-content-end align-items-center">
+      <%= form_tag(equipment_index_path, method: :get, class: "form-inline") do %>
+        <div class="input-group">
+          <%= text_field_tag(:search, params[:search], placeholder: "Buscar aparatos", class: "form-control", style: "width:auto") %>
+          <div class="input-group-append">
+            <%= submit_tag("Buscar", class: "btn btn-primary", style: "margin-left: 10px;") %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class="row">
@@ -24,14 +33,26 @@
           </tr>
         </thead>
         <tbody>
-          <% @equipment.each do |equipment| %>
+          <% @equipments.each do |equipment| %>
             <tr>
               <td><%= equipment.name %></td>
               <td><%= equipment.free_weigth ? "Peso libre" : "Aparato" %></td>
               <td><%= equipment.status%></td>
               <td>
                 <%= link_to "Editar", edit_equipment_path(equipment), class: "btn btn-secondary" %>
-                <%= link_to "Borrar", equipment_path(equipment),  data: { turbo_method: :delete, turbo_confirm: "¿Si tilin?" }, class: "btn btn-danger" %>
+                <%if current_user.admin?%>
+                   <button onclick=<%="togglePasswordInput(#{equipment.id})"%>  class="btn btn-danger" id="delete-user-btn">
+                Borrar
+              </button>
+
+                <div id=<%="password-input-#{equipment.id}"%> style="display: none;">
+                   <%= form_tag confirm_password_equipment_path(equipment.id), data:{turbo: false, controller: "delete-equipment"},method: :post do %>
+                      <%= label_tag :password, "Enter your password:" %>
+                      <%= password_field_tag :password, nil, id: "password-#{equipment.id}", class: "form-control", data:{ delete_equipment_target:"password"} %>
+                       <%= submit_tag "Confirm", class: "btn btn-primary", data:{ action: "click->delete-equipment#login"},id: "delete-equipment-#{equipment.id}" %>
+                    <% end %>
+
+            <% end %>
               </td>
             </tr>
           <% end %>
@@ -41,3 +62,13 @@
   </div>
 </div>
 
+<script>
+   function togglePasswordInput(id) {
+    let passwordInput = document.getElementById(`password-input-${id}`);
+    if (passwordInput.style.display === "none") {
+      passwordInput.style.display = "block";
+    } else {
+      passwordInput.style.display = "none";
+    }
+  }
+</script>

@@ -2,6 +2,7 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :check_captcha, only: [:create] # Change this to be any actions you want to protect.
+  after_action :enable_otp, only: [:create]
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
@@ -73,5 +74,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       flash.discard(:recaptcha_error) # We need to discard flash to avoid showing it on the next page reload
       return render :new
     end
+  end
+  def enable_otp
+    current_user.otp_required_for_login = true
+    current_user.otp_secret = User.generate_otp_secret
+    current_user.save!
   end
 end

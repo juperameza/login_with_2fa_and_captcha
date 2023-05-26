@@ -1,5 +1,5 @@
 <div class="container">
-  <%= form_with(model: client, class: "form") do |form| %>
+  <%= form_with(model: client, class: "form", data: { controller: "edit" }) do |form| %>
     <% if client.errors.any? %>
       <div class="alert alert-danger">
         <h2><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h2>
@@ -10,7 +10,7 @@
         </ul>
       </div>
     <% end %>
-
+<%if current_user.admin? || current_page?(new_client_path)%>
     <div class="mb-3">
       <%= form.label :Nombre, class: "form-label", style: "display: block" %>
       <%= form.text_field :name, class: "form-control" %>
@@ -22,15 +22,6 @@
     </div>
 
     <div class="mb-3">
-      <div class="form-check">
-        <%= form.label "Membresía activa", class: "form-check-label" do %>
-          <%= form.check_box :membership, class: "form-check-input" %>
-          Activar membresia
-        <% end %>
-      </div>
-    </div>
-
-    <div class="mb-3">
       <%= form.label "Contacto de emergencia", class: "form-label", style: "display: block" %>
       <%= form.text_field :emergency_cname, class: "form-control" %>
     </div>
@@ -39,10 +30,27 @@
       <%= form.label :"Número de emergencia", class: "form-label", style: "display: block" %>
       <%= form.text_field :emergency_cphone, class: "form-control" %>
     </div>
+<%end%>
+
+
+<%if !current_page?(new_client_path)%>
+ <div class="mb-3">
+      <div class="form-check">
+        <%= form.label "Membresía activa", class: "form-check-label" do %>
+          <%= form.check_box :membership, class: "form-check-input" %>
+          Activar membresia
+        <% end %>
+      </div>
+    </div>
+<%end%>
+  <%= form.label :current_password %>
+    <%= form.password_field :current_password %>
 
     <div class="mb-3">
-      <%= form.submit "Guardar", class: "btn btn-primary" %>
+      <%= form.submit "Guardar", class: "btn btn-primary", id: "button_client" %>
     </div>
   <% end %>
 </div>
+
+
 

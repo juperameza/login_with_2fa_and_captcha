@@ -21,7 +21,7 @@
           </li>
         <%end%>
         <li class="nav-item">
-                    <%= link_to "Aparatos",  equipment_index_path, class: "nav-link" , style:"color:#{'#f0438c 'if current_page?(equipment_index_path) }"%>
+                    <%= link_to "Aparatos",  equipment_index_path, class: "nav-link" , style:"color:#{'#f0438c' if current_page?(equipment_index_path)|| current_page?(root_path) }"%>
         </li>
       </ul>
       <!-- Left links -->

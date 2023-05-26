@@ -3,7 +3,6 @@ class SessionsController < Devise::SessionsController
     before_action :check_captcha, only: [:create] # Change this to be any actions you want to protect.
 
 
-
     def authenticate_2fa!
         user = self.resource = find_user
         return unless user
@@ -48,5 +47,6 @@ class SessionsController < Devise::SessionsController
         render :new
       end
     end
+  
     end
 

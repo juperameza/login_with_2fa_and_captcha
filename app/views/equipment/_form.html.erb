@@ -2,7 +2,7 @@
 
 
 
-<%= form_with(model: equipment, class: "form") do |form| %>
+<%= form_with(model: equipment, class: "form", data:{controller: "edit"}) do |form| %>
   <% if equipment.errors.any? %>
     <div class="alert alert-danger">
       <h2><%= pluralize(equipment.errors.count, "error") %> prohibited this equipment from being saved:</h2>
@@ -14,7 +14,7 @@
       </ul>
     </div>
   <% end %>
-
+  <%if current_user.admin?%>
   <div class="mb-3">
     <%= form.label :name, class: "form-label" %>
     <%= form.text_field :name, class: "form-control" %>
@@ -24,14 +24,16 @@
     <%= form.label :free_weigth, class: "form-label" %>
     <%= form.select :free_weigth, [["Peso libre", true], ["Maquina", false]], {}, class: "form-select" %>
   </div>
-
+<%end%>
   <div class="mb-3">
     <%= form.label :status, class: "form-label" %>
     <%= form.select :status, [["Funcionando", 0], ["Fuera de servicio", 1], ["En reparacion", 2]], {}, class: "form-select" %>
   </div>
+<%= form.label :current_password%>
+    <%= form.password_field :current_password, id:"client_current_password" %>
 
   <div class="mb-3">
-    <%= form.submit "Save", class: "btn btn-primary" %>
+    <%= form.submit "Save", class: "btn btn-primary", id:"button_client" %>
   </div>
 <% end %>
 

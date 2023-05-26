@@ -14,10 +14,8 @@ class EquipmentTest < ApplicationSystemTestCase
     visit equipment_url
     click_on "New equipment"
 
-    fill_in "Boolean,", with: @equipment.boolean,
     fill_in "Free weigth", with: @equipment.free_weigth
     fill_in "Name", with: @equipment.name
-    fill_in "String", with: @equipment.string
     click_on "Create Equipment"
 
     assert_text "Equipment was successfully created"
@@ -28,10 +26,9 @@ class EquipmentTest < ApplicationSystemTestCase
     visit equipment_url(@equipment)
     click_on "Edit this equipment", match: :first
 
-    fill_in "Boolean,", with: @equipment.boolean,
-    fill_in "Free weigth", with: @equipment.free_weigth
+    fill_in 'Free weigth', with: @equipment.free_weigth
     fill_in "Name", with: @equipment.name
-    fill_in "String", with: @equipment.string
+
     click_on "Update Equipment"
 
     assert_text "Equipment was successfully updated"

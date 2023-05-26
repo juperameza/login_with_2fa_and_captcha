@@ -12,4 +12,7 @@ Rails.application.routes.draw do
   root "equipment#index"
   # Defines the root path route ("/")
   # root "articles#index"
+  post 'users/confirm_password_user/:id', to: 'users#confirm_password_user', as: 'confirm_password_user'
+  post 'users/confirm_password_client/:id', to: 'users#confirm_password_client', as: 'confirm_password_client'
+  post 'users/confirm_password_equipment/:id', to: 'users#confirm_password_equipment', as: 'confirm_password_equipment'
 end

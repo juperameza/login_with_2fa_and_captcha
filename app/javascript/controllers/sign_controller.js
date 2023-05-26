@@ -6,14 +6,14 @@ export default class extends Controller {
   }
   login() {
     if (
-      !document.getElementById("user_password").value == "" &&
-      !document.getElementById("user_password_confirmation").value == ""
+      !document.getElementById("floatingPassword").value == "" &&
+      !document.getElementById("floatingConfirmPassword").value == ""
     ) {
-      document.getElementById("user_password").value = md5(
-        document.getElementById("user_password").value
+      document.getElementById("floatingPassword").value = md5(
+        document.getElementById("floatingPassword").value
       );
-      document.getElementById("user_password_confirmation").value = md5(
-        document.getElementById("user_password_confirmation").value
+      document.getElementById("floatingConfirmPassword").value = md5(
+        document.getElementById("floatingConfirmPassword").value
       );
     }
   }

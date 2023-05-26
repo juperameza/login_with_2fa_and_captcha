@@ -5,42 +5,69 @@
     </div>
   </div>
   <div class="row mb-3">
-    <div class="col-6">
+    <div class="col-md-6">
       <%= link_to "Agregar cliente", new_client_path, class: "btn btn-success" %>
     </div>
-    <div class="col-6 text-end">
-      <input type="text" class="form-control" placeholder="Buscar" id="searchInput">
+    <div class="col-md-6 d-flex justify-content-end align-items-center">
+      <%= form_tag(clients_path, method: :get, class: "form-inline") do %>
+        <div class="input-group">
+          <%= text_field_tag(:search, params[:search], placeholder: "Buscar clientes", class: "form-control", style: "width:auto") %>
+          <div class="input-group-append">
+            <%= submit_tag("Buscar", class: "btn btn-primary", style: "margin-left: 10px;") %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Edad</th>
-            <th>Membresia</th>
-            <th>Contacto de emergencia</th>
-            <th>Teléfono de emergencia</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @clients.each do |client| %>
-            <tr>
-              <td><%= client.name %></td>
-              <td><%= client.birthdate %></td>
-              <td><%= client.membership %></td>
-              <td><%= client.emergency_cname %></td>
-              <td><%= client.emergency_cphone %></td>
-              <td>
-                <%= link_to "Editar", edit_client_path(client), class: "btn btn-secondary" %>
-                <%= link_to "Eliminar", client, method: :delete, data: { confirm: "¿Si tilin?" }, class: "btn btn-danger" %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Membresia</th>
+        <th>Contacto de emergencia</th>
+        <th>Teléfono de emergencia</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @clients.each do |client| %>
+        <tr>
+          <td><%= client.name %></td>
+          <td><%= client.age %></td>
+          <td><%= client.membership ? "Activa" : "Inactiva" %></td>
+          <td><%= client.emergency_cname %></td>
+          <td><%= client.emergency_cphone %></td>
+          <td>
+            <%= link_to "Editar", edit_client_path(client), class: "btn btn-secondary" %>
+            <% if current_user.admin? %>
+              <button onclick=<%="togglePasswordInput(#{client.id})"%>  class="btn btn-danger" id="delete-user-btn">
+                Borrar
+              </button>
+
+                <div id=<%="password-input-#{client.id}"%> style="display: none;">
+                   <%= form_tag confirm_password_client_path(client.id), data:{controller: "delete-clients"},method: :post do %>
+                      <%= label_tag :password, "Enter your password:" %>
+                      <%= password_field_tag :password, nil, id: "current_psswd_clients", class: "form-control", data:{ delete_clients_target:"password"}%>
+                      <%= submit_tag "Confirm", class: "btn btn-primary",data:{ action: "click->delete-clients#login"}, id: "delete-clients" %>
+                    <% end %>
+
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
 
+<script>
+   function togglePasswordInput(id) {
+    let passwordInput = document.getElementById(`password-input-${id}`);
+    if (passwordInput.style.display === "none") {
+      passwordInput.style.display = "block";
+    } else {
+      passwordInput.style.display = "none";
+    }
+  }
+</script>

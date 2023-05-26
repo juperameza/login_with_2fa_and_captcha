@@ -1,7 +1,7 @@
 <div class="container">
   <h2>Edit <%= @user.name %></h2>
 
-  <%= form_for(@user) do |f| %>
+  <%= form_for(@user, data: {turbo: false, controller: "edit"}) do |f| %>
 
 
     <div class="mb-3">
@@ -13,7 +13,11 @@
     <%= f.label :name, for: "floatingName" %>
   </div>
 
-  <div>
+<div class="form-floating mb-3">
+            <%= f.text_field :phone_number, autofocus: true, autocomplete: "phone_number" , class: "form-control", id:"floatingPhone", placeholder: "Numero de telefono"%>
+            <%= f.label :phone_number, for: "floatingPhone" %>
+          </div>
+          <div>
     <%= f.label :birthday, autofocus: true, autocomplete: "birthday" , class: "form-label", id:"date", placeholder: "Nombre completo"%>
     <%= f.date_field :birthday%>
   </div>
@@ -32,13 +36,11 @@
       <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
     </div>
 
-    <div class="mb-3">
-      <%= f.label :current_password, class: "form-label" %> <i>(Necesitamos tu contraseña actual para autorizar los cambios)</i><br />
-      <%= f.password_field :current_password, class: "form-control", autocomplete: "current-password" %>
-    </div>
+  <%= f.label :current_password,class: "form-label" %>
+    <%= f.password_field :current_password,  class: "form-control", id: "client_current_password" %>
 
     <div class="mb-3">
-      <%= f.submit "Update", class: "btn btn-primary" %>
+      <%= f.submit "Update", class: "btn btn-primary", id: "button_client" %>
     </div>
   <% end %>
 
