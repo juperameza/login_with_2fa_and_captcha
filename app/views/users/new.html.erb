@@ -1,0 +1,49 @@
+<div class="container">
+  <h2>Crear </h2>
+
+  <%= form_for (@user) do |f| %>
+
+
+    <div class="mb-3">
+      <%= f.label :"Correo electrónico", class: "form-label" %><br />
+      <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email" %>
+    </div>
+    <div class="form-floating mb-3">
+    <%= f.text_field :name, autofocus: true, autocomplete: "name" , class: "form-control", id:"floatingName", placeholder: "Nombre completo"%>
+    <%= f.label :name, for: "floatingName" %>
+  </div>
+
+  <div>
+    <%= f.label :birthday, autofocus: true, autocomplete: "birthday" , class: "form-label", id:"date", placeholder: "Nombre completo"%>
+    <%= f.date_field :birthday%>
+  </div>
+
+    <div class="mb-3">
+      <%= f.label "Contraseña", class: "form-label" %>
+      <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
+      <% if @minimum_password_length %>
+        <br />
+        <em><%= @minimum_password_length %> caracteres como mínimo</em>
+      <% end %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label "Confirmar contraseña", class: "form-label" %><br />
+      <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label "Hacer admin", class: "form-label" %><br />
+      <%= f.check_box :admin %>
+    </div>
+
+
+    <div class="mb-3">
+      <%= f.submit "Crear", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+
+  <%= link_to "Back", :back %>
+</div>
+
