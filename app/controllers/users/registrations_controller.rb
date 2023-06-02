@@ -77,7 +77,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
   def enable_otp
-    return if self.resource.invalid?
     current_user.otp_required_for_login = true
     current_user.otp_secret = User.generate_otp_secret
     current_user.save!

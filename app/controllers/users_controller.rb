@@ -82,7 +82,9 @@ class UsersController < ApplicationController
           if @user.save
             format.html { redirect_to  users_path, notice: "user was successfully created." }
           else
-            format.html { render :new, status: :unprocessable_entity }
+              @user.errors.full_messages.each do |message|
+              format.html { redirect_to new_user_path, alert: message }
+            end
           end
         end
       end
@@ -108,7 +110,7 @@ class UsersController < ApplicationController
           end
 
           def enable_otp
-            puts @user
+            return if @user.invalid?
             @user.otp_required_for_login = true
             @user.otp_secret = User.generate_otp_secret
             @user.save!
