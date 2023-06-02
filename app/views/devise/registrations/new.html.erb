@@ -81,6 +81,10 @@
             <%= f.label :birthday, autofocus: true, autocomplete: "birthday" , class: "form-label", id:"date", placeholder: "Nombre completo"%>
             <%= f.date_field :birthday, class: "form-control form-control-lg" %>
           </div>
+          <div class="mb-3">
+            <%= f.label "Hacer admin", class: "form-label" %><br />
+            <%= f.check_box :admin %>
+          </div>
 
           <div class="form-floating mb-3" style="margin-top: 10px;">
             <%= f.password_field :password, autocomplete: "new-password", class: "form-control", id:"floatingPassword",  placeholder: "Password" %>
