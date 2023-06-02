@@ -62,7 +62,9 @@ class UsersController < ApplicationController
             if @user.update(params)
               redirect_to users_path, notice: "User was successfully updated."
             else
-              redirect_to edit_user_path(@user), alert: "Something went wrong"
+              @user.errors.full_messages.each do |message|
+                redirect_to edit_user_path(@user), alert: message
+              end
             end
           else
             redirect_to edit_user_path(@user), alert: "Password is incorrect"
