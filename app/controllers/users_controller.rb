@@ -8,7 +8,8 @@ class UsersController < ApplicationController
         @users = User.all
     end
     def edit
-end
+    end
+
       def confirm_password_user
         user = User.find_by(id: params[:id])
 
@@ -19,7 +20,7 @@ end
           redirect_to users_path, notice: "User successfully deleted."
         else
           # Password doesn't match
-          redirect_to user_path(user), alert: "Incorrect password."
+          redirect_to users_path, alert: "Incorrect password."
         end
       end
       def confirm_password_client
@@ -42,7 +43,7 @@ end
           # Password matches
           # Perform the desired action (e.g., delete user)
           equipment.destroy
-          redirect_to equipment_index_path, notice: "Client successfully deleted."
+          redirect_to equipment_index_path, notice: "Equipment successfully deleted."
         else
           # Password doesn't match
           redirect_to equipment_index_path, alert: "Incorrect password."
@@ -54,16 +55,20 @@ end
           params.delete(:password)
           params.delete(:password_confirmation)
       end
+
       if params[:current_password].present?
         if current_user.valid_password?(params[:current_password])
           params.delete(:current_password)
             if @user.update(params)
               redirect_to users_path, notice: "User was successfully updated."
             else
-              flash[:alert] = "Something went wrong"
-              redirect_to :back
+              redirect_to edit_user_path(@user), alert: "Something went wrong"
             end
+          else
+            redirect_to edit_user_path(@user), alert: "Password is incorrect"
           end
+        else
+          redirect_to edit_user_path(@user), alert: "Please enter your current password"
         end
       end
 

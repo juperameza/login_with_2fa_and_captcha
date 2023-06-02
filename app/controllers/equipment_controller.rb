@@ -37,16 +37,26 @@ class EquipmentController < ApplicationController
   def create
     params = equipment_params
     params[:status]= params[:status].to_i
-    @equipment = Equipment.new(params)
-
-    respond_to do |format|
-      if @equipment.save
-        format.html { redirect_to  equipment_index_path, notice: "Equipment was successfully created." }
-        format.json { render :show, status: :created, location: @equipment }
+    if params[:current_password].present?
+      if current_user.valid_password?(params[:current_password])
+        params.delete(:current_password)
+        @equipment = Equipment.new(params) 
+        respond_to do |format|
+          if @equipment.save
+            format.html { redirect_to  equipment_index_path, notice: "Equipment was successfully created." }
+            format.json { render :show, status: :created, location: @equipment }
+          else
+            format.html { render :new, status: :unprocessable_entity }
+            format.json { render json: @equipment.errors, status: :unprocessable_entity }
+          end
+        end
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @equipment.errors, status: :unprocessable_entity }
+        flash[:alert] = "Current password is incorrect"
+        redirect_to new_equipment_path
       end
+    else
+      flash[:alert] = "Current password is required"
+      redirect_to new_equipment_path
     end
   end
 

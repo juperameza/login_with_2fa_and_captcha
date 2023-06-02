@@ -2,12 +2,8 @@
 
 one:
   free_weigth: MyString
-  boolean,: MyString
   name: MyString
-  string: MyString
 
 two:
   free_weigth: MyString
-  boolean,: MyString
   name: MyString
-  string: MyString

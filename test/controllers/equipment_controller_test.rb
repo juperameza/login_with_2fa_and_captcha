@@ -17,7 +17,7 @@ class EquipmentControllerTest < ActionDispatch::IntegrationTest
 
   test "should create equipment" do
     assert_difference("Equipment.count") do
-      post equipment_index_url, params: { equipment: { boolean,: @equipment.boolean,, free_weigth: @equipment.free_weigth, name: @equipment.name, string: @equipment.string } }
+      post equipment_index_url, params: { equipment: {  free_weigth: @equipment.free_weigth, name: @equipment.name, string: @equipment.string } }
     end
 
     assert_redirected_to equipment_url(Equipment.last)
@@ -34,7 +34,7 @@ class EquipmentControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update equipment" do
-    patch equipment_url(@equipment), params: { equipment: { boolean,: @equipment.boolean,, free_weigth: @equipment.free_weigth, name: @equipment.name, string: @equipment.string } }
+    patch equipment_url(@equipment), params: { equipment: {  free_weigth: @equipment.free_weigth, name: @equipment.name, string: @equipment.string } }
     assert_redirected_to equipment_url(@equipment)
   end
 

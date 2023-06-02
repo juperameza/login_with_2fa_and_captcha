@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  before_action :authenticate_user!, only: [:new,:create,:edit, :update, :destroy]
   before_action :check_captcha, only: [:create] # Change this to be any actions you want to protect.
   after_action :enable_otp, only: [:create]
   # before_action :configure_sign_up_params, only: [:create]

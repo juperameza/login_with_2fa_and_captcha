@@ -34,10 +34,7 @@
                <td><%= user.age %></td>
               <td><%= user.admin ? "Admin" : "General" %></td>
               <td>
-              <% if current_user.email == user.email%>
-                 <%= link_to "Editar propio", edit_user_registration_path, method: :get,class: "btn btn-secondary" %>
-                  <%= button_to "Borrar", registration_path(user), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %></div>
-             <%else%>
+
                  <%= link_to "Editar", edit_user_path(user), class: "btn btn-secondary" %>
                 <button onclick=<%="togglePasswordInput(#{user.id})"%>  class="btn btn-danger" id="delete-user-btn">
   Borrar
@@ -48,8 +45,6 @@
                       <%= label_tag :password, "Enter your password:" %>
                       <%= password_field_tag :password, nil, class: "form-control", data:{ delete_user_target:"password"} %>
                       <%= submit_tag "Confirm", class: "btn btn-primary", id: "delete-user", data:{ action: "click->delete-user#login"} %>
-                    <% end %>
-
                 </div>
               <%end%>
               </td>

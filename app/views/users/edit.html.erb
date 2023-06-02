@@ -23,6 +23,10 @@
   </div>
 
     <div class="mb-3">
+      <%= f.label "Hacer admin", class: "form-label" %><br />
+      <%= f.check_box :admin %>
+    </div>
+    <div class="mb-3">
       <%= f.label :"Contraseña", class: "form-label" %> <i>(Si no deseas cambiarla deja el espacio en blanco)</i><br />
       <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
       <% if @minimum_password_length %>
