@@ -83,4 +83,4 @@ production:
   <<: *default
   database: login_production
   username: login
-  password: <%= ENV["LOGIN_DATABASE_PASSWORD"] %>
+  password: <%= ENV["DATABASE_URL"] %>
